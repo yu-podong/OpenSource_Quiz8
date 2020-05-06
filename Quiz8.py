@@ -30,7 +30,7 @@ class Rectangle(Shape):  # 자식 클래스
         squreList = []
 
         sx1 = self.shx1
-        sy1 = self.shx1
+        sy1 = self.shy1
         sx2 = self.shx2
         sy2 = self.shy2
 
@@ -82,11 +82,11 @@ def startDrawRect(event):
     y1 = event.y
 
 def createRectangle(event):
-    global x1, y1, x2, y2,rectangleShape
+    global x1, y1, x2, y2, rectangleShape
     x2 = event.x
     y2 = event.y
     rect = Rectangle(x1, y1, x2, y2, getColor(), getWidth())
-    rect.drawShape()
+    rectangleShape.append(rect)
 
 def startDrawCircle(event):
     global x1, y1, x2, y2, circleShape
@@ -94,11 +94,11 @@ def startDrawCircle(event):
     y1 = event.y
 
 def createCircle(event):
-    global x1, y1, x2, y2,circleShape
+    global x1, y1, x2, y2, circleShape
     x2 = event.x
     y2 = event.y
     circle = Circle(x1, y1, x2, y2, getColor(), getWidth())
-    circle.drawShape()
+    circleShape.append(circle)
 
 def deleteRectangle(event):
     global rectangleShape
@@ -123,12 +123,13 @@ x1, y1, x2, y2 = None, None, None, None
 window = Tk()
 window.title('객체지향 그림판(수정)')
 canvas = Canvas(window, height = 500, width = 1000)
+canvas.bind("<Double-Button-2>", deleteRectangle)
+canvas.bind("<Double-Button-1>", deleteCircle)
 canvas.bind("<Button-1>", startDrawRect)
 canvas.bind("<ButtonRelease-1>", createRectangle)
 canvas.bind("<Button-3>", startDrawCircle)
 canvas.bind("<ButtonRelease-3>", createCircle)
-canvas.bind("<Double-Button-2>", deleteRectangle)
-canvas.bind("<Double-Button-1>", deleteCircle)
+
 
 canvas.pack()
 window.mainloop()
